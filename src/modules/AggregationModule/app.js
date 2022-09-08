@@ -38,6 +38,7 @@ Client.fromEnvironment(Transport, function (err, client) {
 function pipeMessage(client, inputName, msg) {
   var msgString = msg.getBytes().toString('utf8');
   var message = JSON.parse(msgString);
+  console.log('Received message: ' + msgString);
   if (message) {
     bag.push(message);
   }
@@ -49,7 +50,8 @@ function sendMessages(client) {
   while (bag.length > 0) {
     items.push(bag.shift());
   }
-
+  
+  console.log('Sending ' + items.length + ' messages');
   var outputMsg = new Message(JSON.stringify(items));
   client.sendOutputEvent('output', outputMsg, printResultFor('Sending received messages'));
 }
