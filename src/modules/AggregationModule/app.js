@@ -39,8 +39,13 @@ Client.fromEnvironment(Transport, function (err, client) {
 // This function just pipes the messages without any change.
 function pipeMessage(client, inputName, msg) {
   var msgString = msg.getBytes().toString('utf8');
+
   console.log('Received message: ' + msgString);
-  var message = JSON.parse(msgString);
+
+  var message = {
+    data: JSON.parse(msgString),
+    timeStamp: msg.properties.getValue('iothub-enqueuedtime')
+  }
 
   if (message) {
     bag.push(message);
