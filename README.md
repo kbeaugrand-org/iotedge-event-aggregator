@@ -1,6 +1,9 @@
-# IoT Edge Event Aggregation sample
+# IoT Edge Event Aggregation Module
 
-This project is a sample demonstrating how to aggregate events from IoT Edge.
+This project hosts the source code for the IoT Edge Event Aggregation module.
+The edge module is a NodeJS application that aggregates events from EdgeHub according to the specified ``OUTPUT_FREQUENCY`` and compress them using gzip.
+
+For downstream the events, the ``SplitMessagesFunction`` uncompressed the events from IoT Hub and splits them into individual messages into the output event hub.
 
 ## Usage
 
