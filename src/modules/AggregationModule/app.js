@@ -23,6 +23,8 @@ Client.fromEnvironment(Transport, function (err, client) {
 
         // Act on input messages to the module.
         client.on('inputMessage', function (inputName, msg) {
+          console.log('Input message received');
+          console.log('Message: ' + msg.getBytes().toString('utf8'));
           pipeMessage(client, inputName, msg);
         });
 
@@ -37,7 +39,14 @@ Client.fromEnvironment(Transport, function (err, client) {
 // This function just pipes the messages without any change.
 function pipeMessage(client, inputName, msg) {
   var msgString = msg.getBytes().toString('utf8');
-  var message = JSON.parse(msgString);
+
+  console.log('Received message: ' + msgString);
+
+  var message = {
+    data: JSON.parse(msgString),
+    timeStamp: msg.properties.getValue('iothub-enqueuedtime')
+  }
+
   if (message) {
     bag.push(message);
   }
@@ -50,8 +59,11 @@ function sendMessages(client) {
     items.push(bag.shift());
   }
 
-  var outputMsg = new Message(JSON.stringify(items));
-  client.sendOutputEvent('output', outputMsg, printResultFor('Sending received messages'));
+  if(items.length > 0) { 
+    console.log('Sending ' + items.length + ' messages');
+    var outputMsg = new Message(JSON.stringify(items));
+    client.sendOutputEvent('output', outputMsg, printResultFor('Sending received messages'));
+  }
 }
 
 // Helper function to print results in the console
