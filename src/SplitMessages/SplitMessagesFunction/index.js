@@ -2,7 +2,7 @@ const {ungzip} = require('node-gzip');
 
 module.exports = async function (context, eventHubMessages) {    
     eventHubMessages.forEach((message, index) => {
-        ungzip(message)
+        ungzip(Buffer.from(message, 'base64'))
             .then(uncompressed => {
             var event = JSON.parse(uncompressed);
 
