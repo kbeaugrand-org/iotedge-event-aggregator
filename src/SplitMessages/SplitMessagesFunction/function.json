@@ -1,0 +1,21 @@
+{
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "eventHubMessages",
+      "direction": "in",
+      "eventHubName": "d2cmessages",
+      "connection": "INPUT_EVENTHUB",
+      "cardinality": "many",
+      "consumerGroup": "$Default",
+      "dataType": "string"
+    },
+    {
+      "type": "eventHub",
+      "name": "outputEventHubMessage",
+      "eventHubName": "events",
+      "connection": "OUTPUT_EVENTHUB",
+      "direction": "out"
+    }
+  ]
+}
