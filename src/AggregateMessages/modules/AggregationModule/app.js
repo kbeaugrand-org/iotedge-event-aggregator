@@ -4,6 +4,8 @@ var Transport = require('azure-iot-device-mqtt').Mqtt;
 var Client = require('azure-iot-device').ModuleClient;
 var Message = require('azure-iot-device').Message;
 
+const {gzip} = require('node-gzip');
+
 var bag = [];
 
 Client.fromEnvironment(Transport, function (err, client) {
@@ -54,8 +56,10 @@ function sendMessages(client) {
 
   if(items.length > 0) { 
     var result = JSON.stringify(items);
-    var outputMsg = new Message(result);
-    
-    client.sendOutputEvent('output', outputMsg);
+    gzip(result)
+      .then((compressed) => {
+        var outputMsg = new Message(compressed);
+        client.sendOutputEvent('output', outputMsg);
+    });
   }
 }

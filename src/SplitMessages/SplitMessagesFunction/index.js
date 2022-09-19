@@ -1,15 +1,20 @@
+const {ungzip} = require('node-gzip');
+
 module.exports = async function (context, eventHubMessages) {    
     eventHubMessages.forEach((message, index) => {
-        var event = JSON.parse(message);
+        ungzip(message)
+            .then(uncompressed => {
+            var event = JSON.parse(uncompressed);
 
-        if (!Array.isArray(event))
-            return event; 
-
-        context.bindings.outputEventHubMessage = [];
-
-        event.forEach(item => {
-            context.bindings.outputEventHubMessage.push(JSON.stringify(item));
-        });
+            if (!Array.isArray(event))
+                return event; 
+    
+            context.bindings.outputEventHubMessage = [];
+    
+            event.forEach(item => {
+                context.bindings.outputEventHubMessage.push(JSON.stringify(item));
+            });
+        });        
     });
 
     context.done();
