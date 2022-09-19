@@ -58,7 +58,7 @@ function sendMessages(client) {
     var result = JSON.stringify(items);
     gzip(result)
       .then((compressed) => {
-        var outputMsg = new Message(compressed);
+        var outputMsg = new Message(compressed.toString('base64'));
         client.sendOutputEvent('output', outputMsg);
     });
   }
