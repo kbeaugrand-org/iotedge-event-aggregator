@@ -38,10 +38,7 @@ Client.fromEnvironment(Transport, function (err, client) {
 function pipeMessage(client, inputName, msg) {
   var msgString = msg.getBytes().toString('utf8');
 
-  var message = {
-    data: JSON.parse(msgString),
-    timeStamp: msg.properties.getValue('iothub-enqueuedtime')
-  }
+  var message = JSON.parse(msgString);
 
   if (message) {
     bag.push(message);
@@ -56,7 +53,6 @@ function sendMessages(client) {
   }
 
   if(items.length > 0) { 
-    console.log('Sending ' + items.length + ' messages');
     var outputMsg = new Message(JSON.stringify(items));
     client.sendOutputEvent('output', outputMsg);
   }
