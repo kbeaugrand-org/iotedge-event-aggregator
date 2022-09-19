@@ -55,7 +55,6 @@ function sendMessages(client) {
   if(items.length > 0) { 
     var result = JSON.stringify(items);
     var outputMsg = new Message(result);
-    console.log('Sending message: ' + result);
     
     client.sendOutputEvent('output', outputMsg);
   }

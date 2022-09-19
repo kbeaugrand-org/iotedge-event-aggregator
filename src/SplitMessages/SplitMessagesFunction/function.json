@@ -13,7 +13,7 @@
     {
       "type": "eventHub",
       "name": "outputEventHubMessage",
-      "eventHubName": "events",
+      "eventHubName": "telemetry",
       "connection": "OUTPUT_EVENTHUB",
       "direction": "out"
     }

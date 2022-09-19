@@ -92,18 +92,6 @@
             "settings": {
               "image": "${MODULES.AggregationModule.debug}",
               "createOptions": {
-                "ExposedPorts": {
-                  "9229/tcp": {}
-                },
-                "HostConfig": {
-                  "PortBindings": {
-                    "9229/tcp": [
-                      {
-                        "HostPort": "9229"
-                      }
-                    ]
-                  }
-                }
               }
             }
           }
