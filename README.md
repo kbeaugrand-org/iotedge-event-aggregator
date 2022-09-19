@@ -10,7 +10,7 @@ To use the module, you need to deploy the following Azure IoT Edge module:
  "AggregationModule": {
         "restartPolicy": "always",
         "settings": {
-            "image": "ghcr.io/kbeaugrand/azure-iotedge-aggregationmodule:latest",
+            "image": "ghcr.io/kbeaugrand-org/azure-iotedge-aggregationmodule:latest",
             "createOptions": "{}"
         },
         "status": "running",
